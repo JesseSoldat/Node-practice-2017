@@ -19,5 +19,17 @@ var timer = setInterval(function(){
 	}
 },2000);
 
+//Passing functions
+function callFunction(fun){
+	fun();
+}
+
+//function expression
+var sayBye = function(){
+	console.log('good bye');
+};
+
+callFunction(sayBye);
+
 
 
