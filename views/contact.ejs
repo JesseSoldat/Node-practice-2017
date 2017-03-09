@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Contact</title>
-	<style type="text/css">
+	<link rel="stylesheet" type="text/css" href="./public/main.css">
+<!-- 		<style type="text/css">
 		body {background: skyblue; font-family: verdana; color: #fff; padding: 30px;}
 		h1 {font-size: 48px; text-transform: uppercase; letter-spacing: 2px; text-align: center;}
 		p {font-size: 16px; text-align: center}
 		li {list-style: none; display: inline-block; margin-right: 10px;}	
 		a {text-decoration: none; color: #fff;}
-	</style>
+	</style> -->
 </head>
 <body>
 	<% include partials/nav.ejs %>
-	
+
 	<h1>Contact Us</h1>
 	<p>For all your questions contact jlab@gmail.com</p>
+	<p><%= qs.dept %></p>
+	<!-- <p><%= qs.name %></p> -->
+
+	<form id="contact-form" method="POST" action="/contact">
+		<label for="who">Who do you want to contact?</label>
+		<br>
+		<input type="text" name="who" value="<%= qs.name %>" required>
+		<br>
+		<label for="department">Which department?</label>
+		<br>
+		<input type="text" name="department" value="<%= qs.dept %>" required>
+		<br>
+		<label for="email">Your email</label>
+		<br>
+		<input type="email" name="email">
+		<br>
+		<label>Rate Us</label>
+		<select name='rating'>
+		  <option value="great">GREAT</option>
+		  <option value="good">GOOD</option>
+		  <option value="fair">FAIR</option>
+		  <option value="poor">POOR</option>
+		</select>
+		<input type="submit" value="submit">
+	</form>
+
 
 </body>
 </html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contact-Success</title>
+	<link rel="stylesheet" type="text/css" href="./public/main.css">
+</head>
+<body>
+	<% include partials/nav.ejs %>
+
+	<h1>Contact Form Submited</h1>
+	<p>You contacted <%= data.who %> at <%= data.department %></p>
+	<p>You rated us <%= data.rating %></p>
+</body>
+</html>

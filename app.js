@@ -1,15 +1,17 @@
 var express = require('express'); //returns a function
+var bodyParser = require('body-parser');
 var port = 3000;
 
 var people = ['jesse','nate','marcia','mark'];
 
-
-
 var app = express();
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+//body parser gives us req.body
 
 app.set('view engine', 'ejs');
 
-// app.use('/public', express.static('public'));
+app.use('/public', express.static('public'));
 //middleware
 //you can match to a route. if you don't put a route it will use this on every route
 
@@ -25,12 +27,24 @@ app.get('/', function(req, res){
 });
 
 app.get('/contact', function(req, res){
+	//http://localhost:3000/contact?dept=marketing&name=jesse
+	console.log(req.query); //{ dept: 'marketing', name: 'jesse' }
 	// res.send('Contact');
 	// res.sendFile(__dirname + '/contact.html');
 	var number = Math.floor((Math.random() * 5));
 
+	res.render('contact', {number: number, qs: req.query});
+});
 
-	res.render('contact', {number: number});
+app.post('/contact', urlencodedParser, function(req, res) {
+	console.log(req.body);
+
+	var number = Math.floor((Math.random() * 5));
+
+//body parser gives us req.body
+//name="who" name="department" name="email" {who: 'jesse', department: 'marketing', email: 'jsoldat@hotmail.com'}
+	res.render('contact-success', {number: number, data: req.body});
+
 });
 
 app.get('/profile/:id', function(req, res){
@@ -92,7 +106,7 @@ app.get('/profile/:id', function(req, res){
 	}
 	
 	var number = Math.floor((Math.random() * 5));
-	
+
 	res.render('profile', {data: data, number: number});
 	//views/template engines (render knows to look in the views folder /default behavior)
 	//output data <%= %>  output javascript <% %>
