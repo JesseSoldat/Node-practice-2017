@@ -1,16 +1,17 @@
-let http = require('http');
-let fs = require('fs');
+var http = require('http');
+var fs = require('fs');
+var data = require('./starwars.json');
+var port = 3000;
+var host = '127.0.0.1';
 
-var myReadStream = fs.createReadStream(__dirname + '/news.txt');
-var myReadStreamUtf8 = fs.createReadStream(__dirname + '/news.txt', 'utf8');
+// console.log(data);
 
-
-let chunks = 0;
-
-myReadStream.on('data', function(chunk){
-	chunks += 1; 
-	console.log('--------------'+chunks+' New Chunks Of Data------------------');
-	console.log(chunk);
-	console.log('------------------------------------------------------------');
+var server = http.createServer(function(req, res) {
+	res.writeHead(200, {'Content-Type': 'Application/json'});
+	var myResponse = JSON.stringify(data);
+	res.end(myResponse);
 });
-//as each chunk is recieved we can pass it on instead of waiting for all of it to be read
+
+server.listen(port, host, function(){
+	console.log('Server running at '+host+':'+port);
+});
