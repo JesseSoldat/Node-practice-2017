@@ -1,17 +1,28 @@
 var http = require('http');
 var fs = require('fs');
-var data = require('./starwars.json');
 var port = 3000;
 var host = '127.0.0.1';
+var starwars = require('./starwars.json');
+ 
+var server = http.createServer(function(req, res){
+	if(req.url === '/home' || req.url === '/'){
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		fs.createReadStream(__dirname + '/index.html').pipe(res);
+		
+	} else if (req.url === '/contact') {
+			res.writeHead(200, {'Content-Type': 'text/html'});
+			fs.createReadStream(__dirname + '/contact.html').pipe(res);
+		
+	} else if (req.url === '/api/starwars') {
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.end(JSON.stringify(starwars));
 
-// console.log(data);
-
-var server = http.createServer(function(req, res) {
-	res.writeHead(200, {'Content-Type': 'Application/json'});
-	var myResponse = JSON.stringify(data);
-	res.end(myResponse);
+	}
+	else {
+		res.writeHead(404, {'Content-Type': 'text/html'});
+		fs.createReadStream(__dirname + '/404.html').pipe(res);
+	}
+	
 });
 
-server.listen(port, host, function(){
-	console.log('Server running at '+host+':'+port);
-});
+server.listen(port, host);
